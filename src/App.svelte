@@ -77,7 +77,7 @@
         <div>
           <h2>Length</h2>
           <input type="number" id="length" name="length" />
-          <h2>Weight</h2>
+          <h2>Weight.</h2>
           <input type="number" id="weight" name="weight" />
         </div>
       </div>
