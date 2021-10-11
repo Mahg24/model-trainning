@@ -12,7 +12,7 @@
     };
 
     fetch(
-      "http://42a7-181-63-22-161.ngrok.io/api/packages?Serial=" + serial,
+      "https://42a7-181-63-22-161.ngrok.io/api/packages?Serial=" + serial,
       requestOptions
     )
       .then((response) => response.json())
@@ -53,7 +53,7 @@
       body: raw,
       redirect: "follow",
     };
-    let url = "http://42a7-181-63-22-161.ngrok.io/api/packages/" + idPackage;
+    let url = "https://42a7-181-63-22-161.ngrok.io/api/packages/" + idPackage;
     fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
