@@ -1,9 +1,9 @@
 <script>
+  import Content from "./Content.svelte";
+  import Modal from "svelte-simple-modal";
+  const apiURL = "http://localhost:3334";
   let status = "Send";
   let idPackage = "";
-  function send() {
-    alert(status);
-  }
   async function buscar() {
     const serial = document.getElementById("serial").value;
     var requestOptions = {
@@ -11,10 +11,7 @@
       redirect: "follow",
     };
 
-    fetch(
-      "https://42a7-181-63-22-161.ngrok.io/api/packages?Serial=" + serial,
-      requestOptions
-    )
+    fetch(apiURL + "/api/packages?Serial=" + serial, requestOptions)
       .then((response) => response.json())
       .then((response) => {
         document.getElementById("height").value = response.Data.height;
@@ -53,7 +50,7 @@
       body: raw,
       redirect: "follow",
     };
-    let url = "https://42a7-181-63-22-161.ngrok.io/api/packages/" + idPackage;
+    let url = apiURL + "/api/packages/" + idPackage;
     fetch(url, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
@@ -82,6 +79,9 @@
         </div>
       </div>
       <button on:click={sendRead}>{status}</button>
+      <Modal>
+        <Content />
+      </Modal>
     </div>
   </div>
 </main>
