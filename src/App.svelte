@@ -1,9 +1,19 @@
 <script>
   import Content from "./Content.svelte";
   import Modal from "svelte-simple-modal";
-  const apiURL = "http://localhost:3334";
+  const apiURL = "http://ec2-54-198-54-106.compute-1.amazonaws.com";
+  //const apiURL = "http://localhost:3334";
   let status = "Send";
   let idPackage = "";
+  let dim = "123456";
+
+  function changeDimensioner() {
+    if ((dim = "123456")) {
+      dim = "456789";
+    } else {
+      dim = "123456";
+    }
+  }
   async function buscar() {
     const serial = document.getElementById("serial").value;
     var requestOptions = {
@@ -37,6 +47,7 @@
     myHeaders.append("Content-Type", "application/json");
     let raw = JSON.stringify({
       Serial: document.getElementById("serial").value,
+      dimensioner: document.querySelector('input[name="drone"]:checked').value,
       Data: {
         height: parseFloat(document.getElementById("height").value),
         width: parseFloat(document.getElementById("width").value),
@@ -80,13 +91,43 @@
       </div>
       <button on:click={sendRead}>{status}</button>
       <Modal>
-        <Content />
+        <Content dimensioner={dim} />
       </Modal>
+
+      <div class="dim">
+        <input
+          type="radio"
+          on:change={changeDimensioner}
+          id="huey"
+          name="drone"
+          value="123456"
+          checked
+        />
+        <label for="huey">123456</label>
+
+        <input
+          on:change={changeDimensioner}
+          type="radio"
+          id="dewey"
+          name="drone"
+          value="456789"
+        />
+        <label for="dewey">456789</label>
+      </div>
     </div>
   </div>
 </main>
 
 <style>
+  .dim {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    padding: 10px;
+  }
+  .dim > label {
+    margin: 0 10px;
+  }
   .data {
     display: flex;
     justify-content: space-evenly;
@@ -98,10 +139,13 @@
     margin: 0 auto;
   }
 
+  input {
+    margin-bottom: 10px;
+  }
   h1 {
     color: #ff3e00;
     text-transform: uppercase;
-    font-size: 4em;
+    font-size: 1em;
     font-weight: 100;
   }
 
