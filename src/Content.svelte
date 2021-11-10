@@ -16,10 +16,10 @@
     };
     let url = apiURL + "/api/packages/calibrate";
     console.log(raw);
-    fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => open(Surprise, { message: result }))
-      .catch((error) => open(Surprise, { message: error }));
+    // fetch(url, requestOptions)
+    //   .then((response) => response.text())
+    //   .then((result) => open(Surprise, { message: result }))
+    //   .catch((error) => open(Surprise, { message: error }));
   };
 </script>
 

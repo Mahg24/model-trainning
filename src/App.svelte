@@ -8,7 +8,7 @@
   let dim = "123456";
 
   function changeDimensioner() {
-    if ((dim = "123456")) {
+    if (dim == "123456") {
       dim = "456789";
     } else {
       dim = "123456";
