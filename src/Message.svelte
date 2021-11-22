@@ -3,9 +3,7 @@
 </script>
 
 {#if !message.error}
-  <p>
-    🎉 {message} 🍾
-  </p>
+  <p>🎉Calibrated! 🍾</p>
 {:else}
   <p>
     ❌❌❌ {message.error} ❌❌❌
