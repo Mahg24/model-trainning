@@ -1,8 +1,7 @@
 <script>
   import { getContext } from "svelte";
   import Surprise from "./Message.svelte";
-  // const apiURL = "http://ec2-54-198-54-106.compute-1.amazonaws.com";
-  const apiURL = "http://localhost:3334";
+  import { apiURL } from "./Api";
 
   const { open } = getContext("simple-modal");
   export let dimensioner;

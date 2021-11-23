@@ -7,10 +7,13 @@
   let dim = "123456";
   let resultDataPackage = {};
   function assingData(data) {
-    document.getElementById("height").value = data.height || "";
-    document.getElementById("width").value = data.width || "";
-    document.getElementById("length").value = data.length || "";
-    document.getElementById("weight").value = data.weight || "";
+    document.getElementById("height").value =
+      parseFloat(data.height) * 100 || "";
+    document.getElementById("width").value = parseFloat(data.width) * 100 || "";
+    document.getElementById("length").value =
+      parseFloat(data.length) * 100 || "";
+    document.getElementById("weight").value =
+      parseFloat(data.weight) * 100 || "";
   }
 
   async function getRealdata() {
@@ -30,14 +33,21 @@
       Serial: document.getElementById("serial").value,
       dimensioner: "123456",
       Data: {
-        height: parseFloat(document.getElementById("height").value),
-        width: parseFloat(document.getElementById("width").value),
-        length: parseFloat(document.getElementById("length").value),
-        weight: parseFloat(document.getElementById("weight").value),
+        height: parseFloat(document.getElementById("height").value) / 100,
+        width: parseFloat(document.getElementById("width").value) / 100,
+        length: parseFloat(document.getElementById("length").value) / 100,
+        weight: parseFloat(document.getElementById("weight").value) / 100,
       },
     });
-    console.log(raw);
-    console.log(await send(raw));
+
+    const result = await send(raw);
+    console.log(result);
+    if (result.statusCode == undefined) {
+      idPackage = result._id;
+      alert("Guardado");
+    } else if (result.statusCode == 400) {
+      alert("Error");
+    }
   }
   async function readButton() {
     const result = await read(idPackage);
