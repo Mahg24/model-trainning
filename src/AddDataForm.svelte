@@ -8,12 +8,12 @@
   let resultDataPackage = {};
   function assingData(data) {
     document.getElementById("height").value =
-      parseFloat(data.height) * 100 || "";
-    document.getElementById("width").value = parseFloat(data.width) * 100 || "";
+      parseFloat(data.height) / 0.0254 || "";
+    document.getElementById("width").value =
+      parseFloat(data.width) / 0.0254 || "";
     document.getElementById("length").value =
-      parseFloat(data.length) * 100 || "";
-    document.getElementById("weight").value =
-      parseFloat(data.weight) * 100 || "";
+      parseFloat(data.length) / 0.0254 || "";
+    document.getElementById("weight").value = parseFloat(data.weight);
   }
 
   async function getRealdata() {
@@ -33,10 +33,10 @@
       Serial: document.getElementById("serial").value,
       dimensioner: "123456",
       Data: {
-        height: parseFloat(document.getElementById("height").value) / 100,
-        width: parseFloat(document.getElementById("width").value) / 100,
-        length: parseFloat(document.getElementById("length").value) / 100,
-        weight: parseFloat(document.getElementById("weight").value) / 100,
+        height: parseFloat(document.getElementById("height").value) * 0.0254,
+        width: parseFloat(document.getElementById("width").value) * 0.0254,
+        length: parseFloat(document.getElementById("length").value) * 0.0254,
+        weight: parseFloat(document.getElementById("weight").value),
       },
     });
 
@@ -50,6 +50,7 @@
     }
   }
   async function readButton() {
+    document.getElementById("btn").style.display = "none";
     const result = await read(idPackage);
     console.log(result);
     if (!result.error) {
@@ -100,9 +101,12 @@
 <div>
   <h1>Model Training</h1>
   <div>
-    <h2>Serial</h2>
-    <input type="text" id="serial" name="serial" on:blur={getRealdata} />
-    <button on:click={getNew}>New</button>
+    <div class="flex-data">
+      <h2>Serial</h2>
+      <input type="text" id="serial" name="serial" on:blur={getRealdata} />
+      <button on:click={getNew}>New..</button>
+    </div>
+
     <div class="data">
       <div>
         <h2>Height</h2>
@@ -117,8 +121,11 @@
         <input type="number" id="weight" name="weight" />
       </div>
     </div>
-    <button on:click={saveButton}>Save</button>
-    <button on:click={readButton}>Read</button>
+    <div class="flex-data">
+      <button on:click={saveButton}>Save</button>
+      <button on:click={readButton}>Read</button>
+    </div>
+
     <Modal>
       <CalibrateButton dimensioner={dim} />
     </Modal>
@@ -142,5 +149,17 @@
     text-transform: uppercase;
     font-size: 1em;
     font-weight: 100;
+  }
+  button {
+    margin-bottom: 10px;
+    width: 60%;
+    height: 50px;
+  }
+
+  .flex-data {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

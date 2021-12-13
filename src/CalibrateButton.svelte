@@ -24,3 +24,11 @@
 </script>
 
 <p><button on:click={showSurprise}>Calibrate {dimensioner}</button></p>
+
+<style>
+  button {
+    margin-bottom: 10px;
+    width: 60%;
+    height: 50px;
+  }
+</style>
