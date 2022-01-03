@@ -1,4 +1,5 @@
-export const apiURL = "http://ec2-54-198-54-106.compute-1.amazonaws.com";
+// export const apiURL = "http://ec2-54-198-54-106.compute-1.amazonaws.com";
+export const apiURL = "http://localhost:3334";
 export async function buscar(serial) {
   const requestOptions = {
     method: "GET",

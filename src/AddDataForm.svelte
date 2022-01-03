@@ -6,7 +6,10 @@
   let idPackage = "";
   let dim = "123456";
   let resultDataPackage = {};
+  let save = false;
+
   function assingData(data) {
+    save = false;
     document.getElementById("height").value =
       parseFloat(data.height) / 0.0254 || "";
     document.getElementById("width").value =
@@ -23,12 +26,45 @@
 
       assingData(result.Data);
     } else {
-      assingData({});
       idPackage = "";
     }
   }
 
   async function saveButton() {
+    if (
+      isNaN(parseFloat(document.getElementById("length").value)) ||
+      isNaN(parseFloat(document.getElementById("height").value)) ||
+      isNaN(parseFloat(document.getElementById("width").value)) ||
+      isNaN(parseFloat(document.getElementById("weight").value))
+    ) {
+      alert("The values must be numbers");
+      return;
+    }
+    if (
+      parseFloat(document.getElementById("width").value) >
+      parseFloat(document.getElementById("length").value)
+    ) {
+      alert("The width must be less than the length");
+      return false;
+    }
+    if (
+      parseFloat(document.getElementById("length").value) <= 0 ||
+      parseFloat(document.getElementById("height").value) <= 0 ||
+      parseFloat(document.getElementById("width").value) <= 0 ||
+      parseFloat(document.getElementById("weight").value) <= 0
+    ) {
+      alert("The values must be greater than 0");
+      return false;
+    }
+    if (
+      parseFloat(document.getElementById("length").value) > 60 ||
+      parseFloat(document.getElementById("height").value) > 60 ||
+      parseFloat(document.getElementById("width").value) > 60 ||
+      parseFloat(document.getElementById("weight").value) > 60
+    ) {
+      alert("The values must be smaller than 60 inches");
+      return false;
+    }
     let raw = JSON.stringify({
       Serial: document.getElementById("serial").value,
       dimensioner: "123456",
@@ -50,9 +86,18 @@
     }
   }
   async function readButton() {
+    if (idPackage == "") {
+      alert("You must save the package first");
+      return;
+    }
+    if (save) {
+      if (!confirm("Are you sure you want to read the data again?")) {
+        return false;
+      }
+    }
+    save = true;
     document.getElementById("btn").style.display = "none";
     const result = await read(idPackage);
-    console.log(result);
     if (!result.error) {
       const ObjIR = {
         name: "IR",
