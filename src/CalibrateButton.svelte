@@ -22,7 +22,7 @@
       .catch((error) => open(Surprise, { message: error }));
   };
 </script>
-
+  
 <p><button on:click={showSurprise}>Calibrate {dimensioner}</button></p>
 
 <style>

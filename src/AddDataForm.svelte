@@ -5,6 +5,7 @@
   import { buscar, send, read, newPackage } from "./Api";
   let idPackage = "";
   let dim = "123456";
+  let camera="structure";
   let resultDataPackage = {};
   let save = false;
 
@@ -17,6 +18,19 @@
     document.getElementById("length").value =
       parseFloat(data.length) / 0.0254 || "";
     document.getElementById("weight").value = parseFloat(data.weight);
+  }
+
+  function changeCamera()
+  {
+
+    if (document.querySelector('input[name="camara"]:checked').value==="intel") {
+
+      dim="7890"
+      camera="intel"
+    }else{
+      dim = "123456";
+      camera="structure"
+    }
   }
 
   async function getRealdata() {
@@ -68,6 +82,7 @@
     let raw = JSON.stringify({
       Serial: document.getElementById("serial").value,
       dimensioner: "123456",
+      camera:camera,
       Data: {
         height: parseFloat(document.getElementById("height").value) * 0.0254,
         width: parseFloat(document.getElementById("width").value) * 0.0254,
@@ -97,7 +112,8 @@
     }
     save = true;
     document.getElementById("btn").style.display = "none";
-    const result = await read(idPackage);
+    const result = await read(idPackage, camera);
+    console.log(result);
     if (!result.error) {
       const ObjIR = {
         name: "IR",
@@ -145,6 +161,17 @@
 
 <div>
   <h1>Model Training</h1>
+     <h2>Camera</h2>
+  <div class="cameras">
+    <div class="cameras-option">
+      <label for="struncture">Structure</label>
+      <input type="radio" value="structure" checked name="camara" on:change="{changeCamera}" id="structureCamera">
+    </div>
+    <div class="cameras-option">
+      <label for="intel">Intel</label>
+      <input type="radio" value="intel"  on:change="{changeCamera}" name="camara" id="intelCamera">
+    </div>
+  </div>
   <div>
     <div class="flex-data">
       <h2>Serial</h2>
@@ -181,6 +208,12 @@
 </div>
 
 <style>
+  .cameras
+  {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+  }
   .data {
     display: flex;
     justify-content: space-evenly;

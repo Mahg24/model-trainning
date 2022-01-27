@@ -3,6 +3,7 @@
 </script>
 
 <main>
+
   <AddDataForm />
 </main>
 
