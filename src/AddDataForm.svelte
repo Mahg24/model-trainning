@@ -81,7 +81,7 @@
     }
     let raw = JSON.stringify({
       Serial: document.getElementById("serial").value,
-      dimensioner: "123456",
+      dimensioner: dim,
       camera:camera,
       Data: {
         height: parseFloat(document.getElementById("height").value) * 0.0254,
@@ -112,7 +112,7 @@
     }
     save = true;
     document.getElementById("btn").style.display = "none";
-    const result = await read(idPackage, camera);
+    const result = await read(idPackage, camera,dim);
     console.log(result);
     if (!result.error) {
       const ObjIR = {
